@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="BarCodeScanView">
+    <attr format="string" name="labelText"/>
+    <attr format="reference" name="labelTextSize"/>
+  </declare-styleable>
+
+</resources>
