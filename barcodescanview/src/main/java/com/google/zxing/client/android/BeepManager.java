@@ -22,7 +22,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.Log;
-import com.tourbillon.barcodescanview.R;
+import com.anbillon.barcodescanview.R;
 import java.io.Closeable;
 import java.io.IOException;
 

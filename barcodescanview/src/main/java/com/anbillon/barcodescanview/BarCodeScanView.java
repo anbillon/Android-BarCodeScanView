@@ -1,4 +1,4 @@
-package com.tourbillon.barcodescanview;
+package com.anbillon.barcodescanview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  * @author Vincent Cheung (coolingfall@gmail.com)
  */
-public class BarCodeScanView extends FrameLayout
+public final class BarCodeScanView extends FrameLayout
     implements SurfaceHolder.Callback, CaptureHandler.OnCaptureListener {
   private OnCameraErrorListener onCameraErrorListener;
   private OnBarCodeReadListener onBarCodeReadListener;

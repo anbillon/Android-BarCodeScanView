@@ -1,4 +1,4 @@
-package com.tourbillon.barcodescanview.sample;
+package com.anbillon.barcodescanview.sample;
 
 import android.content.Intent;
 import android.os.Bundle;

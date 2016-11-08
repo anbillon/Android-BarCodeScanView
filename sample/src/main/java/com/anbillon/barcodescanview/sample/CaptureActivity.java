@@ -1,10 +1,10 @@
-package com.tourbillon.barcodescanview.sample;
+package com.anbillon.barcodescanview.sample;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.tourbillon.barcodescanview.BarCodeScanView;
+import com.anbillon.barcodescanview.BarCodeScanView;
 import com.google.zxing.Result;
 
 /**

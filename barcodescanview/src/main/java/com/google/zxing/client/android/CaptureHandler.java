@@ -1,5 +1,6 @@
 package com.google.zxing.client.android;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import com.google.zxing.Result;
@@ -61,7 +62,12 @@ public final class CaptureHandler extends Handler {
    * Quit Synchronously.
    */
   public void quitSynchronously() {
-    decodeThread.quitSafely();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      decodeThread.quitSafely();
+    } else {
+      decodeThread.quit();
+    }
+
     try {
       decodeThread.join(500L);
     } catch (InterruptedException ignore) {

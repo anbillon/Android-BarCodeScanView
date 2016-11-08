@@ -10,7 +10,7 @@ import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import com.tourbillon.barcodescanview.R;
+import com.anbillon.barcodescanview.R;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
 import java.util.ArrayList;
