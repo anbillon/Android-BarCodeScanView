@@ -3,7 +3,8 @@
 
   <declare-styleable name="BarCodeScanView">
     <attr format="string" name="labelText"/>
-    <attr format="reference" name="labelTextSize"/>
+    <attr format="dimension" name="labelTextSize"/>
+    <attr format="boolean" name="shouldPlayBeepAndVibrate"/>
   </declare-styleable>
 
 </resources>

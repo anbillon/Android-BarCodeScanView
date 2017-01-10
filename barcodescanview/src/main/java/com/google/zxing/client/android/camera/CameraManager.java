@@ -89,7 +89,7 @@ import java.io.IOException;
    * @param height @throws IOException Indicates the camera driver failed to open.
    */
   public synchronized void openDriver(SurfaceHolder holder, int width, int height)
-      throws IOException {
+      throws Exception {
     OpenCamera theCamera = openCamera;
     if (!isOpen()) {
       theCamera = OpenCameraInterface.open(requestedCameraId);
@@ -196,7 +196,7 @@ import java.io.IOException;
   /**
    * Asks the camera hardware to begin drawing preview frames to the screen.
    */
-  public synchronized void startPreview() {
+  public synchronized void startPreview() throws Exception {
     OpenCamera theCamera = openCamera;
     if (theCamera != null && !previewing) {
       theCamera.getCamera().startPreview();
@@ -256,9 +256,10 @@ import java.io.IOException;
       int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
       int height =
           findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+      width = height = Math.min(width, height);
 
       int leftOffset = (screenResolution.x - width) / 2;
-      int topOffset = (screenResolution.y - height) / 2;
+      int topOffset = (screenResolution.y - height) * 2 / 5;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
       Log.d(TAG, "Calculated framing rect: " + framingRect);
     }

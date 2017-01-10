@@ -39,8 +39,7 @@ import android.util.Log;
    * camera is returned if possible or else any camera
    * @return handle to {@link OpenCamera} that was opened
    */
-  public static OpenCamera open(int cameraId) {
-
+  public static OpenCamera open(int cameraId) throws Exception {
     int numCameras = Camera.getNumberOfCameras();
     if (numCameras == 0) {
       Log.w(TAG, "No cameras!");

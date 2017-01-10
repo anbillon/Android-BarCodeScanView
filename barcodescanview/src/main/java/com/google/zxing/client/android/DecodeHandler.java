@@ -1,6 +1,7 @@
 package com.google.zxing.client.android;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
@@ -21,7 +22,8 @@ final class DecodeHandler extends Handler {
   private final Handler handler;
 
   DecodeHandler(CameraManager cameraManager, MultiFormatReader multiFormatReader,
-      CaptureHandler captureHandler) {
+      CaptureHandler captureHandler, Looper looper) {
+    super(looper);
     this.cameraManager = cameraManager;
     this.multiFormatReader = multiFormatReader;
     handler = captureHandler;
@@ -36,6 +38,12 @@ final class DecodeHandler extends Handler {
   }
 
   @SuppressWarnings("SuspiciousNameCombination") private void decode(byte[] data) {
+    if (cameraManager.getPreviewSize() == null) {
+      Message message = Message.obtain(handler, Constants.MESSAGE_FAILED);
+      message.sendToTarget();
+      return;
+    }
+
     int width = cameraManager.getPreviewSize().x;
     int height = cameraManager.getPreviewSize().y;
 

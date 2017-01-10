@@ -14,6 +14,10 @@ import android.os.Message;
   private int previewMessage;
 
   @Override public void onPreviewFrame(byte[] data, Camera camera) {
+    if (handler == null) {
+      return;
+    }
+
     Message message = Message.obtain(handler, previewMessage, data);
     message.sendToTarget();
   }
