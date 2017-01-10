@@ -17,13 +17,16 @@ import java.util.Map;
  * @author Vincent Cheung (coolingfall@gmail.com)
  */
 final class DecodeThread extends HandlerThread {
-  private final DecodeHandler decodeHandler;
+  private final CameraManager cameraManager;
+  private final MultiFormatReader multiFormatReader;
+  private final CaptureHandler captureHandler;
+  private DecodeHandler decodeHandler;
 
   private DecodeThread(String name, ViewfinderView viewfinderView, CameraManager cameraManager,
       CaptureHandler captureHandler) {
     super(name);
 
-    MultiFormatReader multiFormatReader = new MultiFormatReader();
+    multiFormatReader = new MultiFormatReader();
     Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
     Collection<BarcodeFormat> decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
     decodeFormats.addAll(DecodeFormatManager.ALL_FORMATS);
@@ -31,13 +34,19 @@ final class DecodeThread extends HandlerThread {
     hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK,
         new ViewfinderResultPointCallback(viewfinderView, cameraManager));
     multiFormatReader.setHints(hints);
-
-    decodeHandler = new DecodeHandler(cameraManager, multiFormatReader, captureHandler);
+    this.cameraManager = cameraManager;
+    this.captureHandler = captureHandler;
   }
 
   DecodeThread(ViewfinderView viewfinderView, CameraManager cameraManager,
       CaptureHandler captureHandler) {
     this("DecodeThread", viewfinderView, cameraManager, captureHandler);
+  }
+
+  @Override protected void onLooperPrepared() {
+    super.onLooperPrepared();
+    decodeHandler =
+        new DecodeHandler(cameraManager, multiFormatReader, captureHandler, getLooper());
   }
 
   /**

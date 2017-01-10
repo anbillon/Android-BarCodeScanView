@@ -10,8 +10,8 @@ import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import com.anbillon.barcodescanview.R;
 import com.google.zxing.ResultPoint;
+import com.anbillon.barcodescanview.R;
 import com.google.zxing.client.android.camera.CameraManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 public final class ViewfinderView extends View {
   /* the alpha of the scan page */
   private static final int[] SCANNER_ALPHA = { 0, 64, 128, 192, 255, 192, 128, 64 };
-  private static final long ANIMATION_DELAY = 40L;
+  private static final long ANIMATION_DELAY = 28L;
   private static final int CURRENT_POINT_OPACITY = 0xA0;
   private static final int MAX_RESULT_POINTS = 20;
   private static final int POINT_SIZE = 10;
@@ -237,6 +237,10 @@ public final class ViewfinderView extends View {
    * @param label label
    */
   public void setLabelText(String label) {
+    if (label == null) {
+      return;
+    }
+
     this.label = label;
   }
 
@@ -247,6 +251,15 @@ public final class ViewfinderView extends View {
    */
   public void setLabelText(int resId) {
     label = getContext().getString(resId);
+  }
+
+  /**
+   * Set text size for label.
+   *
+   * @param textSize text size
+   */
+  public void setLabelTextSize(float textSize) {
+    labelPaint.setTextSize(textSize);
   }
 
   /**

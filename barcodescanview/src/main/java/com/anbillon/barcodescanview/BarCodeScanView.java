@@ -1,18 +1,17 @@
 package com.anbillon.barcodescanview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import com.google.zxing.Result;
-import com.google.zxing.client.android.AmbientLightManager;
 import com.google.zxing.client.android.BeepManager;
 import com.google.zxing.client.android.CaptureHandler;
 import com.google.zxing.client.android.ViewfinderView;
 import com.google.zxing.client.android.camera.CameraManager;
-import java.io.IOException;
 
 /**
  * BarCodeScanView Class which uses ZXING lib and let you easily integrate a QR decoder view.
@@ -20,13 +19,12 @@ import java.io.IOException;
  *
  * @author Vincent Cheung (coolingfall@gmail.com)
  */
-public final class BarCodeScanView extends FrameLayout
+public class BarCodeScanView extends FrameLayout
     implements SurfaceHolder.Callback, CaptureHandler.OnCaptureListener {
   private OnCameraErrorListener onCameraErrorListener;
   private OnBarCodeReadListener onBarCodeReadListener;
   private final CameraManager cameraManager;
   private final BeepManager beepManager;
-  private final AmbientLightManager ambientLightManager;
   private CaptureHandler captureHandler;
 
   public BarCodeScanView(Context context) {
@@ -52,11 +50,20 @@ public final class BarCodeScanView extends FrameLayout
     addView(surfaceView);
     addView(viewfinderView);
 
+    TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BarCodeScanView);
+    String label = a.getString(R.styleable.BarCodeScanView_labelText);
+    float labelTextSize = a.getDimensionPixelSize(R.styleable.BarCodeScanView_labelTextSize, 40);
+    boolean shouldPlayBeepAndVibrate =
+        a.getBoolean(R.styleable.BarCodeScanView_shouldPlayBeepAndVibrate, true);
+    a.recycle();
+
+    viewfinderView.setLabelText(label);
+    viewfinderView.setLabelTextSize(labelTextSize);
+
     beepManager = new BeepManager(context);
-    ambientLightManager = new AmbientLightManager(context);
+    beepManager.shouldPlayBeepAndVbirate(shouldPlayBeepAndVibrate);
     cameraManager = new CameraManager(getContext());
     viewfinderView.setCameraManager(cameraManager);
-    //ambientLightManager.start(cameraManager);
     surfaceView.getHolder().addCallback(this);
     captureHandler = new CaptureHandler(viewfinderView, cameraManager, this);
   }
@@ -65,7 +72,6 @@ public final class BarCodeScanView extends FrameLayout
     super.onDetachedFromWindow();
     setKeepScreenOn(false);
     beepManager.close();
-    //ambientLightManager.stop();
     captureHandler.quitSynchronously();
     captureHandler = null;
   }
@@ -73,14 +79,14 @@ public final class BarCodeScanView extends FrameLayout
   @Override public void surfaceCreated(SurfaceHolder holder) {
     try {
       cameraManager.openDriver(holder, this.getWidth(), this.getHeight());
-    } catch (IOException e) {
+      cameraManager.startPreview();
+    } catch (Exception e) {
       if (onCameraErrorListener != null) {
-        onCameraErrorListener.onCameraError("Can not openDriver: " + e.getMessage());
+        onCameraErrorListener.onCameraError("Can not open camera: " + e.getMessage());
       }
       return;
     }
 
-    cameraManager.startPreview();
     captureHandler.restartPreviewAndDecode();
   }
 
@@ -99,8 +105,16 @@ public final class BarCodeScanView extends FrameLayout
       return;
     }
 
-    cameraManager.stopPreview();
-    cameraManager.startPreview();
+    try {
+      cameraManager.stopPreview();
+      cameraManager.startPreview();
+    } catch (Exception e) {
+      if (onCameraErrorListener != null) {
+        onCameraErrorListener.onCameraError("Can not open camera: " + e.getMessage());
+      }
+      return;
+    }
+
     captureHandler.restartPreviewAndDecode();
   }
 

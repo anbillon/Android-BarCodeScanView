@@ -56,7 +56,10 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
     if (mediaPlayer == null) {
       mediaPlayer = buildMediaPlayer(context);
     }
-    mediaPlayer.start();
+
+    if (mediaPlayer != null) {
+      mediaPlayer.start();
+    }
 
     Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     vibrator.vibrate(VIBRATE_DURATION);

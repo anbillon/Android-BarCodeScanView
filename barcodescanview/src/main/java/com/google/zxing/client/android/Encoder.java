@@ -18,7 +18,7 @@ import com.google.zxing.common.BitMatrix;
 import java.util.Hashtable;
 
 /**
- * Encoder
+ * This class represents a encoder for 1D/2D barcode.
  *
  * @author Vincent Cheung (coolingfall@gmail.com)
  */
