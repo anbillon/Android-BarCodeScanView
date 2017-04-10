@@ -8,8 +8,14 @@ android {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
   }
+
+  lintOptions {
+    abortOnError false
+  }
 }
 
 dependencies {
   provided rootProject.ext.zxingCore
 }
+
+apply from: rootProject.file('gradle/maven_push.gradle')

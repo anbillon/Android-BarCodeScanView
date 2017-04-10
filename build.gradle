@@ -20,11 +20,11 @@ task clean(type: Delete) {
 }
 
 ext {
-  compileSdkVersion = 24
-  buildToolsVersion = '24.0.2'
+  compileSdkVersion = 25
+  buildToolsVersion = '25.0.2'
 
   minSdkVersion = 15
-  targetSdkVersion = 22
+  targetSdkVersion = 25
 
   zxingCore = 'com.google.zxing:core:3.3.0'
 }

@@ -162,16 +162,14 @@ import java.util.List;
     Camera.Size afterSize = afterParameters.getPreviewSize();
     if (afterSize != null && (bestPreviewSize.x != afterSize.width
         || bestPreviewSize.y != afterSize.height)) {
-      Log.w(TAG,
-          "Camera said it supported preview size "
-              + bestPreviewSize.x
-              + 'x'
-              + bestPreviewSize.y
-              +
-              ", but after setting it, preview size is "
-              + afterSize.width
-              + 'x'
-              + afterSize.height);
+      Log.w(TAG, "Camera said it supported preview size "
+          + bestPreviewSize.x
+          + 'x'
+          + bestPreviewSize.y
+          + ", but after setting it, preview size is "
+          + afterSize.width
+          + 'x'
+          + afterSize.height);
       bestPreviewSize.x = afterSize.width;
       bestPreviewSize.y = afterSize.height;
     }
