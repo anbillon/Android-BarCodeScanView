@@ -1,0 +1,17 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.anbillon.barcodescanview">
+
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+
+  <uses-feature
+      android:name="android.hardware.camera"
+      android:required="true"/>
+  <uses-feature
+      android:name="android.hardware.camera.autofocus"
+      android:required="false"/>
+
+  <application/>
+
+</manifest>

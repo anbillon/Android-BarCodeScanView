@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="BarCodeScanView">
+    <attr format="string" name="labelText"/>
+    <attr format="dimension" name="labelTextSize"/>
+    <attr format="boolean" name="shouldPlayBeepAndVibrate"/>
+  </declare-styleable>
+
+</resources>
